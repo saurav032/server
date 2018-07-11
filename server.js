@@ -49,6 +49,10 @@ app.get("/bin/:firstSixDigit", (req, res) => {
   }
 });
 
+app.get("/port", (req, res) => {
+  res.send({ port: port });
+});
+
 app.get("*", (req, res) => {
   res.send({ name: "Saurav" });
 });
