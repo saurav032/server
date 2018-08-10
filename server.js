@@ -58,6 +58,7 @@ app.get("/port", (req, res) => {
 
 app.get("/saurav*", function(req, res) {
   const url = IRCTCAPI + req.url.replace("/saurav", "");
+  console.log("url: ", url);
   const headers = {
     "Content-Type": "application/json",
     greq: new Date().getTime()
@@ -67,9 +68,11 @@ app.get("/saurav*", function(req, res) {
       headers: headers
     })
     .then(response => {
+      console.log(response);
       res.status(200).send({ data: response.data });
     })
     .catch(error => {
+      console.log(error);
       res.status(500).send();
     });
 });
@@ -77,6 +80,8 @@ app.get("/saurav*", function(req, res) {
 app.post("/saurav*", function(req, res) {
   const url = IRCTCAPI + req.url.replace("/saurav", "");
   const data = req.body;
+  console.log("url: ", url);
+  console.log("data: ", data);
   const headers = {
     "Content-Type": "application/json",
     greq: new Date().getTime()
@@ -84,9 +89,11 @@ app.post("/saurav*", function(req, res) {
   axios
     .post(url, data, { headers: headers })
     .then(response => {
+      console.log(response);
       res.status(200).send({ data: response.data });
     })
     .catch(error => {
+      console.log(error);
       res.status(500).send();
     });
 });
