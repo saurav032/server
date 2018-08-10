@@ -68,10 +68,12 @@ app.get("/saurav*", function(req, res) {
       headers: headers
     })
     .then(response => {
+      console.log("response");
       console.log(response);
       res.status(200).send({ data: response.data });
     })
     .catch(error => {
+      console.log("error");
       console.log(error);
       res.status(500).send();
     });
@@ -89,10 +91,12 @@ app.post("/saurav*", function(req, res) {
   axios
     .post(url, data, { headers: headers })
     .then(response => {
+      console.log("response");
       console.log(response);
       res.status(200).send({ data: response.data });
     })
     .catch(error => {
+      console.log("error");
       console.log(error);
       res.status(500).send();
     });
