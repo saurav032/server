@@ -21,7 +21,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+// app.use("/", require("./irctc"));
+
 const API = "https://api.freebinchecker.com/bin";
+const IRCTCAPI = "https://www.irctc.co.in/eticketing/protected/mapps1";
 
 app.get("/bin", (req, res) => {
   axios
@@ -53,10 +56,45 @@ app.get("/port", (req, res) => {
   res.send({ port: port });
 });
 
+app.get("/saurav*", function(req, res) {
+  const url = IRCTCAPI + req.url.replace("/saurav", "");
+  const headers = {
+    "Content-Type": "application/json",
+    greq: new Date().getTime()
+  };
+  axios
+    .get(url, {
+      headers: headers
+    })
+    .then(response => {
+      res.status(200).send({ data: response.data });
+    })
+    .catch(error => {
+      res.status(500).send();
+    });
+});
+
+app.post("/saurav*", function(req, res) {
+  const url = IRCTCAPI + req.url.replace("/saurav", "");
+  const data = req.body;
+  const headers = {
+    "Content-Type": "application/json",
+    greq: new Date().getTime()
+  };
+  axios
+    .post(url, data, { headers: headers })
+    .then(response => {
+      res.status(200).send({ data: response.data });
+    })
+    .catch(error => {
+      res.status(500).send();
+    });
+});
+
 app.get("*", (req, res) => {
   res.send({ name: "Saurav" });
 });
 
 app.listen(port, () => {
-  console.log("Server started");
+  console.log("Server started on " + port);
 });
