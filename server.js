@@ -139,6 +139,29 @@ app.post("/saurav*", function(req, res) {
     });
 });
 
+const headers = {
+  "Content-Type": "application/json",
+  greq: new Date().getTime()
+};
+
+const sourceStationCode = "ANVT";
+const destinationStationCode = "BTH";
+const journeyDate = "20180810";
+
+axios
+  .get(
+    `${IRCTCAPI}/tbstns/${sourceStationCode}/${destinationStationCode}/${journeyDate}`,
+    {
+      headers: headers
+    }
+  )
+  .then(response => {
+    console.log(JSON.stringify(response.data, undefined, 2));
+  })
+  .catch(error => {
+    console.log("error" + error);
+  });
+
 app.get("*", (req, res) => {
   res.send({ name: "Saurav, Gaurav" });
 });
