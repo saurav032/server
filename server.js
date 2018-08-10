@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const requester = require("request");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -77,6 +78,42 @@ app.get("/saurav*", function(req, res) {
       console.log(error);
       res.status(500).send();
     });
+});
+
+app.get("/gaurav*", function(req, res) {
+  const url = IRCTCAPI + req.url.replace("/gaurav", "");
+  console.log("url: ", url);
+  const headers = {
+    "Content-Type": "application/json",
+    greq: new Date().getTime()
+  };
+  requester(
+    {
+      url: url,
+      headers: headers,
+      method: "get"
+    },
+    function(error, result, body) {
+      res.setHeader("Content-Type", "application/json");
+      if (error) {
+        console.log("error");
+        console.log(error);
+        if (error.statusCode) {
+          res.statusCode = error.statusCode;
+        } else {
+          res.statusCode = 500;
+        }
+        res.send(error);
+      } else {
+        console.log("result");
+        console.log(result);
+        if (result && result.statusCode) {
+          res.statusCode = result.statusCode;
+        }
+        res.send(body);
+      }
+    }
+  );
 });
 
 app.post("/saurav*", function(req, res) {
